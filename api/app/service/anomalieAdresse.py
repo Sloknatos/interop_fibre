@@ -2,11 +2,11 @@ from typing import Annotated
 from fastapi import Depends
 from sqlmodel import Session
 
-from api.app.database.db_client import get_session
-from api.app.error.exceptions import ExternalIDNotFound
-from api.app.model.anomalieAdresse import AnomalieAdresse
-from api.app.model.status import Status
-from api.app.database.anomalieAdresseManager import AnomalieAdresseManager
+from app.database.db_client import get_session
+from app.error.exceptions import ExternalIDNotFound
+from app.model.anomalieAdresse import AnomalieAdresse
+from app.model.status import Status
+from app.database.anomalieAdresseManager import AnomalieAdresseManager
 
 
 class AnomalieAdresseService:
@@ -16,7 +16,9 @@ class AnomalieAdresseService:
         self.session = session
         self.anomalie_adresse_manager = AnomalieAdresseManager(self.session)
 
-    def create_anomalie(self, anomalie_adresse: AnomalieAdresse) -> AnomalieAdresse:
+    def create_anomalie(
+        self, anomalie_adresse: AnomalieAdresse
+    ) -> AnomalieAdresse:
         # Fields validation
         mandatory_fields = ["status", "priority", "code_oi"]
         for field in mandatory_fields:
@@ -27,7 +29,9 @@ class AnomalieAdresseService:
         anomalie_adresse.status = Status.ACKNOWLEDGED
 
         # Put in DB
-        return self.anomalie_adresse_manager.create_anomalieAdresse(anomalie_adresse)
+        return self.anomalie_adresse_manager.create_anomalieAdresse(
+            anomalie_adresse
+        )
 
     def read_one_anomalie(self, external_id: str) -> AnomalieAdresse:
         anomalie = self.anomalie_adresse_manager.read_one_anomalie(external_id)

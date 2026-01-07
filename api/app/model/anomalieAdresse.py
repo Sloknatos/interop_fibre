@@ -8,28 +8,27 @@ from .ticketType import TicketType
 from app.utils.regex_checker import is_code_check_regex
 
 
-class AnomalieAdresse(SQLModel):
-    __tablename__ = "anomalieAdresse"
-    id: str | None = Field(default=None, primary_key=True)
+class AnomalieAdresse(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
     status: Status = Field(default=Status.ACKNOWLEDGED)
-    status_change_details: str = Field(default="")
-    description: str = Field(default="")
-    external_Dd: str = Field(default="")
-    priority: Priority = Field()
+    status_change_details: str | None = Field(default=None)
+    description: str | None = Field(default=None)
+    external_id: str | None = Field(default=None)
+    priority: Priority = Field(default=Priority.LOW)
 
     # relatedEntity: dict #RelatedBuilding : should implement more models
     # relatedParty: list #relatedEntity : same
 
-    requested_Resolution_date: datetime = Field(default=datetime.now)
-    severity: str = Field(default="")
+    requested_Resolution_date: datetime | None = Field(default=None)
+    severity: str | None = Field(default=None)
 
-    ticket_type: TicketType = Field()
+    ticket_type: TicketType | None = Field(default=TicketType.CUSTOMER_REQUEST)
     # statusChangeReason: dict # no more info in swagger, is this something as key, value where key = datatime of change and value = str with human readable reason ?
 
-    code_oi: str = Field(default="")
-    code_oc: str = Field(default="")
-    siren: str = Field(default="")
-    siret: str = Field(default="")
+    code_oi: str = Field(default="FETL")
+    code_oc: str | None = Field(default=None)
+    siren: str | None = Field(default=None)
+    siret: str | None = Field(default=None)
 
     @field_validator("code_oi")
     @classmethod

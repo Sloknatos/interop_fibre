@@ -2,20 +2,18 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
-from api.app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
-from api.app.model.anomalieAdresse import AnomalieAdresse
-from api.app.database.db_client import get_db
-from api.app.service.anomalieAdresse import AnomalieAdresseService
+from app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
+from app.model.anomalieAdresse import AnomalieAdresse
+from app.database.db_client import get_session
+from app.service.anomalieAdresse import AnomalieAdresseService
 
-router = APIRouter(prefix="/anomalie-adresse'", tags=["TroubleTicket"])
-
-# TODO make the error
+router = APIRouter(prefix="/anomalie-adresse", tags=["TroubleTicket"])
 
 
-@router.post("")
+@router.post("/")
 def create_anomalie_adresse(
-    anomalie_adresse: AnomalieAdresse, session: Session = Depends(get_db)
-) -> AnomalieAdresse | JSONResponse:
+    anomalie_adresse: AnomalieAdresse, session: Session = Depends(get_session)
+):
     anomalie_adresse_service = AnomalieAdresseService(session)
     try:
         return anomalie_adresse_service.create_anomalie(anomalie_adresse)
@@ -27,22 +25,22 @@ def create_anomalie_adresse(
 
 @router.get("/{AnomalieAdresseId}")
 def read_anomalie_adresse(
-    AnomalieAdresseId: str, session: Session = Depends(get_db)
-) -> AnomalieAdresse | JSONResponse:
+    AnomalieAdresseId: str, session: Session = Depends(get_session)
+):
     anomalie_adresse_service = AnomalieAdresseService(session)
     try:
         return anomalie_adresse_service.read_one_anomalie(AnomalieAdresseId)
     except ExternalIDNotFound as exc:
         return JSONResponse(status_code=404, content={"message": exc.__str__()})
     except Exception as exc:
-        return JSONResponse(status_code=500, content={"message": exc.__str__()})
+        raise JSONResponse(status_code=404, content={"message": exc.__str__()})
 
 
 # Just cancellation for the moment, should deny service for other patch, Promise refacto
 @router.patch("/{AnomalieAdresseId}")
 def patch_anomalie_adresse(
-    AnomalieAdresseId: str, session: Session = Depends(get_db)
-) -> AnomalieAdresse:
+    AnomalieAdresseId: str, session: Session = Depends(get_session)
+):
     anomalie_adresse_service = AnomalieAdresseService(session)
     try:
         return anomalie_adresse_service.cancel_anomalie(AnomalieAdresseId)

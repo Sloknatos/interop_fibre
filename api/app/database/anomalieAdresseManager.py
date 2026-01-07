@@ -3,10 +3,10 @@ from typing import Annotated
 from fastapi import Depends
 from sqlmodel import Session, select
 
-from api.app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
-from api.app.model.status import Status
-from api.app.database.db_client import get_session
-from api.app.model.anomalieAdresse import AnomalieAdresse
+from app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
+from app.model.status import Status
+from app.database.db_client import get_session
+from app.model.anomalieAdresse import AnomalieAdresse
 
 
 class AnomalieAdresseManager:

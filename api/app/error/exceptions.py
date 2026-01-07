@@ -1,6 +1,6 @@
-class ExternalIDNotFound(Exception):
+class ExternalIDNotFound(BaseException):
     pass
 
 
-class AnomalieCanceled(Exception):
+class AnomalieCanceled(BaseException):
     pass
