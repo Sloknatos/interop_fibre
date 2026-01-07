@@ -1,0 +1,10 @@
+from enum import Enum
+
+class Status(str, Enum):
+    ACKNOWLEDGED = 'ACKNOWLEDGED'
+    IN_PROGRESS = 'IN_PROGRESS'
+    PENDING = 'PENDING'
+    RESOLVED = 'RESOLVED'
+    CLOSED = 'CLOSED'
+    REJECTED = 'REJECTED'
+    CANCELED = 'CANCELED'

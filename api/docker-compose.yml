@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - 8443:8080
+    restart: on-failure
+    depends_on:
+      - postgres
+
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    environment:
+      DEBUG: 1
+    ports:
+      - 8080:8080
+    restart: on-failure
+    depends_on:
+      - postgres
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: database
+    environment:
+      DATABASE_HOST: postgres
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
