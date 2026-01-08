@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  prod:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - 8443:8080
+    restart: on-failure
+
+  dev:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: dev
+    environment:
+      DEBUG: 1
+    ports:
+      - 8080:8080
+    restart: on-failure
+
+  test:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: test
+
+# Here a example of a Database Service
+# the credentials should be in a docker secret or other vault service
+#  postgres:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      target: database
+#    environment:
+#      DATABASE_HOST: postgres
+#      POSTGRES_USER: myuser
+#      POSTGRES_PASSWORD: mypassword
+#      POSTGRES_DB: mydatabase
+#    volumes:
+#      - ./data:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"
+#    restart: on-failure
