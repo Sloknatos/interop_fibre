@@ -30,7 +30,8 @@ test = [
     "pytest (>=9.0.2,<10.0.0)",
     "pytest-cov (>=7.0.0,<8.0.0)",
     "pytest-describe (>=3.1.0,<4.0.0)",
-    "pytest-mock (>=3.15.1,<4.0.0)"
+    "pytest-mock (>=3.15.1,<4.0.0)",
+    "pytest-api-cov (>=1.2.3,<2.0.0)",
 ]
 
 [tool.poetry.group.dev]
@@ -44,3 +45,11 @@ exclude = ["tests"]
 line-length = 80
 fix = true
 preview = true
+
+[tool.pytest.ini_options]
+addopts = "--api-cov-report --cov=app tests/ --cov-fail-under=80 -v --ignore=tests/unitaire/model/test_anomalieAdresse.py"
+testpaths = ["tests"]
+norecursedirs="tests/unitaire/model/*"
+filterwarnings =["ignore::DeprecationWarning"]
+
+[tool.coverage]

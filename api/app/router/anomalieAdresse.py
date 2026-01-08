@@ -14,8 +14,8 @@ router = APIRouter(prefix="/anomalie-adresse", tags=["TroubleTicket"])
 def create_anomalie_adresse(
     anomalie_adresse: AnomalieAdresse, session: Session = Depends(get_session)
 ):
-    anomalie_adresse_service = AnomalieAdresseService(session)
     try:
+        anomalie_adresse_service = AnomalieAdresseService(session)
         return anomalie_adresse_service.create_anomalie(anomalie_adresse)
     except ValueError as exc:
         return JSONResponse(status_code=400, content={"message": exc.__str__()})
@@ -27,13 +27,13 @@ def create_anomalie_adresse(
 def read_anomalie_adresse(
     AnomalieAdresseId: str, session: Session = Depends(get_session)
 ):
-    anomalie_adresse_service = AnomalieAdresseService(session)
     try:
+        anomalie_adresse_service = AnomalieAdresseService(session)
         return anomalie_adresse_service.read_one_anomalie(AnomalieAdresseId)
     except ExternalIDNotFound as exc:
         return JSONResponse(status_code=404, content={"message": exc.__str__()})
     except Exception as exc:
-        raise JSONResponse(status_code=404, content={"message": exc.__str__()})
+        return JSONResponse(status_code=500, content={"message": exc.__str__()})
 
 
 # Just cancellation for the moment, should deny service for other patch, Promise refacto
@@ -41,8 +41,8 @@ def read_anomalie_adresse(
 def patch_anomalie_adresse(
     AnomalieAdresseId: str, session: Session = Depends(get_session)
 ):
-    anomalie_adresse_service = AnomalieAdresseService(session)
     try:
+        anomalie_adresse_service = AnomalieAdresseService(session)
         return anomalie_adresse_service.cancel_anomalie(AnomalieAdresseId)
     except ExternalIDNotFound as exc:
         return JSONResponse(status_code=400, content={"message": exc.__str__()})

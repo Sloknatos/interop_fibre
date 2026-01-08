@@ -21,7 +21,9 @@ class AnomalieAdresseService:
     ) -> AnomalieAdresse:
         # Fields validation
         mandatory_fields = ["status", "priority", "code_oi"]
+        print(anomalie_adresse)
         for field in mandatory_fields:
+            print(field)
             if not anomalie_adresse.__getattribute__(field):
                 raise ValueError(f"The field {field} is mandatory")
 
