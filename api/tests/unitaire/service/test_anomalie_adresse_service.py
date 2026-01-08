@@ -1,15 +1,15 @@
 import pytest
 from app.error.exceptions import ExternalIDNotFound
 from app.model.status import Status
-from api.app.model.anomalie_adresse import AnomalieAdresse
-from api.app.service.anomalie_adresse import AnomalieAdresseService
+from app.model.anomalie_adresse import AnomalieAdresse
+from app.service.anomalie_adresse import AnomalieAdresseService
 
 
 @pytest.fixture
 def anomalie_adresse_service(mocker, session):
     manager = mocker.MagicMock()
     mocker.patch(
-        "app.service.anomalieAdresse.AnomalieAdresseManager",
+        "app.service.anomalie_adresse.AnomalieAdresseManager",
         return_value=manager,
     )
     service = AnomalieAdresseService(session)
@@ -21,7 +21,7 @@ def describe_anomalie_adresse_service():
         def it_create_classe(mocker, session):
             manager = mocker.MagicMock()
             mocker.patch(
-                "app.service.anomalieAdresse.AnomalieAdresseManager",
+                "app.service.anomalie_adresse.AnomalieAdresseManager",
                 return_value=manager,
             )
             service = AnomalieAdresseService(session)
@@ -51,7 +51,7 @@ def describe_anomalie_adresse_service():
 
             anomalie_adresse_service.create_anomalie(anomalie_model)
 
-            anomalie_adresse_service.anomalie_adresse_manager.create_anomalieAdresse.assert_called_once_with(
+            anomalie_adresse_service.anomalie_adresse_manager.create_anomalie_adresse.assert_called_once_with(
                 anomalie_expect
             )
 

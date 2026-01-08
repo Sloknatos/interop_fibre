@@ -41,18 +41,3 @@ COPY ./app /api/test
 RUN poetry install --with test
 
 CMD ["uvicorn", "--app-dir", "/api/app", "main:app", "--host", "0.0.0.0", "--port", "8080"]
-
-
-# Create Database image
-FROM postgres:latest as database
-
-# Those lines should not exist like this in real life, I should use docker secret or other vault solution
-# The purpose of those lines is to make the test review easier
-# Never push sensitive data on version control !!
-
-ENV POSTGRES_USER=myuser
-ENV POSTGRES_PASSWORD=mypassword
-ENV POSTGRES_DB=mydatabase
-
-EXPOSE 5432
-

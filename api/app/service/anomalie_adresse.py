@@ -4,9 +4,9 @@ from sqlmodel import Session
 
 from app.database.db_client import get_session
 from app.error.exceptions import ExternalIDNotFound
-from app.model.anomalieAdresse import AnomalieAdresse
+from app.model.anomalie_adresse import AnomalieAdresse
 from app.model.status import Status
-from app.database.anomalieAdresseManager import AnomalieAdresseManager
+from app.database.anomalie_adresse_manager import AnomalieAdresseManager
 
 
 class AnomalieAdresseService:
@@ -21,9 +21,7 @@ class AnomalieAdresseService:
     ) -> AnomalieAdresse:
         # Fields validation
         mandatory_fields = ["status", "priority", "code_oi"]
-        print(anomalie_adresse)
         for field in mandatory_fields:
-            print(field)
             if not anomalie_adresse.__getattribute__(field):
                 raise ValueError(f"The field {field} is mandatory")
 
@@ -31,7 +29,7 @@ class AnomalieAdresseService:
         anomalie_adresse.status = Status.ACKNOWLEDGED
 
         # Put in DB
-        return self.anomalie_adresse_manager.create_anomalieAdresse(
+        return self.anomalie_adresse_manager.create_anomalie_adresse(
             anomalie_adresse
         )
 

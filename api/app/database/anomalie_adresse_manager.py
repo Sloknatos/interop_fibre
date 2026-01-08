@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
 from app.model.status import Status
 from app.database.db_client import get_session
-from app.model.anomalieAdresse import AnomalieAdresse
+from app.model.anomalie_adresse import AnomalieAdresse
 
 
 class AnomalieAdresseManager:
@@ -15,7 +15,7 @@ class AnomalieAdresseManager:
     def __init__(self, session: SessionDep):
         self.session = session
 
-    def create_anomalieAdresse(
+    def create_anomalie_adresse(
         self, anomalie_adresse: AnomalieAdresse
     ) -> AnomalieAdresse:
         self.session.add(anomalie_adresse)

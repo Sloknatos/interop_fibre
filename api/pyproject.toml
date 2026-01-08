@@ -47,7 +47,7 @@ fix = true
 preview = true
 
 [tool.pytest.ini_options]
-addopts = "--api-cov-report --cov=app tests/ --cov-fail-under=80 -v --ignore=tests/unitaire/model/test_anomalieAdresse.py"
+addopts = "--cov-report=term-missing --cov-report html --cov=app tests/ --cov-fail-under=80 -v --ignore=tests/unitaire/model/test_anomalieAdresse.py"
 testpaths = ["tests"]
 norecursedirs="tests/unitaire/model/*"
 filterwarnings =["ignore::DeprecationWarning"]

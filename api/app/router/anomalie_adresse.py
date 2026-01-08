@@ -3,9 +3,9 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
-from app.model.anomalieAdresse import AnomalieAdresse
+from app.model.anomalie_adresse import AnomalieAdresse
 from app.database.db_client import get_session
-from app.service.anomalieAdresse import AnomalieAdresseService
+from app.service.anomalie_adresse import AnomalieAdresseService
 
 router = APIRouter(prefix="/anomalie-adresse", tags=["TroubleTicket"])
 

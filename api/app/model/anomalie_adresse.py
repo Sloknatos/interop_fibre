@@ -34,7 +34,6 @@ class AnomalieAdresse(SQLModel, table=True):
     @classmethod
     def code_oi_pattern_compliance(cls, code: str) -> str:
         result = is_code_check_regex(code)
-        print(result)
         if not result:
             raise ValueError("code do not match regex")
         return code.title()
@@ -43,7 +42,6 @@ class AnomalieAdresse(SQLModel, table=True):
     @classmethod
     def code_oc_pattern_compliance(cls, code: str) -> str:
         result = is_code_check_regex(code)
-        print(result)
         if not result:
             raise ValueError("code do not match regex")
         return code.title()

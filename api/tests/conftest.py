@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 
-from api.app.model.anomalie_adresse import AnomalieAdresse
+from app.model.anomalie_adresse import AnomalieAdresse
 from app.model.status import Status
 from app.main import app
 

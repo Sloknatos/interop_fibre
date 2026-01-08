@@ -1,6 +1,6 @@
 import pytest
 from app.error.exceptions import AnomalieCanceled, ExternalIDNotFound
-from api.app.database.anomalie_adresse_manager import AnomalieAdresseManager
+from app.database.anomalie_adresse_manager import AnomalieAdresseManager
 
 
 def describe_anomalie_adresse_manager():
@@ -21,7 +21,7 @@ def describe_anomalie_adresse_manager():
     def describe_creation():
         def it_create(mocker, session):
             anomalie = AnomalieAdresseManager(session)
-            result = anomalie.create_anomalieAdresse(mocker)
+            result = anomalie.create_anomalie_adresse(mocker)
 
             session.add.assert_called_once()
             session.commit.assert_called_once()
