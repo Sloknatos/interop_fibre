@@ -20,7 +20,7 @@ package-mode = false
 [tool.poetry.dependencies]
 fastapi = {extras = ["standard"], version = "^0.128.0"}
 uvicorn = {extras = ["standard"], version = "^0.40.0"}
-sqlalchemy = "^2.0.45"
+sqlmodel = "^0.0.31"
 
 [dependency-groups]
 dev = [
@@ -47,7 +47,7 @@ fix = true
 preview = true
 
 [tool.pytest.ini_options]
-addopts = "--cov-report=term-missing --cov-report html --cov=app tests/ --cov-fail-under=80 -v --ignore=tests/unitaire/model/test_anomalieAdresse.py"
+addopts = "--cov-report=term-missing --cov-report html --cov=app tests/ --cov-fail-under=80"
 testpaths = ["tests"]
 norecursedirs="tests/unitaire/model/*"
 filterwarnings =["ignore::DeprecationWarning"]

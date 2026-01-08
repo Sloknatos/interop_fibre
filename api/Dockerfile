@@ -2,21 +2,21 @@
 FROM python:3.12 as builder
 
 WORKDIR /api
-COPY ./pyproject.toml /api/pyproject.toml
+COPY ./requirements.txt /api/requirements.txt
+COPY ./.env /api/.env
 
-RUN pip install -U pip setuptools poetry
+RUN pip install -U pip setuptools
 RUN pip install fastapi["standard"]
 ENV PYTHONPATH=/api
+RUN pip install -r requirements.txt
 
 COPY ./app /api/app
-COPY ./poetry.lock /api/poetry.lock
 
 
 # Prepare image for running containers
 FROM builder as runner
 
 RUN pip install uvicorn["standard"]
-RUN poetry install
 
 
 
@@ -29,7 +29,6 @@ CMD ["uvicorn", "--app-dir", "/api/app", "main:app", "--host", "0.0.0.0", "--por
 # Create image for dev environment
 FROM runner as dev
 
-RUN poetry install --with dev
 
 CMD ["uvicorn", "--app-dir", "/api/app", "main:app", "--host", "0.0.0.0", "--port", "8080"]
 
@@ -37,7 +36,6 @@ CMD ["uvicorn", "--app-dir", "/api/app", "main:app", "--host", "0.0.0.0", "--por
 # Create image for test
 FROM builder as test
 
-COPY ./app /api/test 
-RUN poetry install --with test
+COPY ./ /api/
 
-CMD ["uvicorn", "--app-dir", "/api/app", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["pytest"]

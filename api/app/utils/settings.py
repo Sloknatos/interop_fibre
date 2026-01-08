@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     database_db: str
     database_port: int
     sqlite_path: str
+    openapi_url: str = "/openapi.json"
 
     model_config = SettingsConfigDict()
 
